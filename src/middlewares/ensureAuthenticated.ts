@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
+import AppError from '../errors/AppError';
 
 interface TokenPayLoad {
   iat: string;
@@ -17,7 +18,7 @@ export default function ensureAuthenticated(
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('JWT Token is missing');
+    throw new AppError('JWT Token is missing', 401);
   }
 
   const [, token] = authHeader.split(' ');
@@ -27,8 +28,12 @@ export default function ensureAuthenticated(
 
     const { sub } = verifyToken as TokenPayLoad;
 
+    req.user = {
+      id: sub
+    };
+
     return next();
   } catch {
-    throw new Error('JWT Token is missing');
+    throw new AppError('JWT Token is missing');
   }
 }
