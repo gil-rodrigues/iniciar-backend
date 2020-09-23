@@ -2,11 +2,11 @@ import { Router } from 'express';
 import multer from 'multer';
 import util from 'util';
 import { verify } from 'jsonwebtoken';
-import CreateUserService from '../services/CreateUserService';
-import uploadConfig from '../config/upload';
+import uploadConfig from '@config/upload';
+import CreateUserService from '@modules/users/services/CreateUserService';
 
+import UploadUserAvatarService from '@modules/users/services/UploadUserAvatarService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import UploadUserAvatarService from '../services/UploadUserAvatarService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
