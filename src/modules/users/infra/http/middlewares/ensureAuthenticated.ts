@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface TokenPayLoad {
+interface ITokenPayLoad {
   iat: string;
   exp: number;
   sub: string;
@@ -26,7 +26,7 @@ export default function ensureAuthenticated(
   try {
     const verifyToken = verify(token, authConfig.jwt.secret);
 
-    const { sub } = verifyToken as TokenPayLoad;
+    const { sub } = verifyToken as ITokenPayLoad;
 
     req.user = {
       id: sub
