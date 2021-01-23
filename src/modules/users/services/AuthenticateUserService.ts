@@ -6,6 +6,7 @@ import AppError from '@shared/errors/AppError';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
+import { classToClass } from 'class-transformer';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
@@ -52,7 +53,7 @@ class AuthenticateUserService {
     });
 
     return {
-      user,
+      user: classToClass(user),
       token
     };
   }

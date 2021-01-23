@@ -1,5 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
+import { classToClass } from 'class-transformer';
+
 import AppError from '@shared/errors/AppError';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import User from '../infra/typeorm/entities/User';
@@ -38,6 +40,6 @@ export default class UpdateUserAvatarService {
 
     await this.usersRepository.save(user);
 
-    return user;
+    return classToClass(user);
   }
 }

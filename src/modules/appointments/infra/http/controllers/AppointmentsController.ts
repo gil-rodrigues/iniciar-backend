@@ -7,15 +7,15 @@ import AppError from '@shared/errors/AppError';
 
 export default class AppointmentsController {
   public async create(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const { provider_id, date } = req.body;
-
-    const parsedDate = parseISO(date);
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointment.run({
       provider_id,
-      date: parsedDate
+      user_id,
+      date
     });
 
     if (!appointment) throw new AppError('Error in creation of appointment');
